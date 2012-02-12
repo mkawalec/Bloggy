@@ -60,19 +60,15 @@ window.addEvent('domready', function() {
     if(document.getElements("input[value='Post comment']").length > 0){
         document.getElements("input[value='Post comment']").each(function(element){
             element.addEvent('click', function(event){
-                console.log('clicked');
                 event.stop();
-                console.log('stopped');
                 var form = this.parentNode.parentNode.parentNode.parentNode;
                 var action = form.getProperty('action');
                 var index = action.lastIndexOf('/');
-                action = action.split(0,index+1);
-                action += encodeURIComponent(highlighted());
+                action = action.slice(0,index+1);
+                console.log(action + ' ' + index + ' ' + action.length);
+                action += encodeURIComponent(commenting_on_cont);
                 form.setProperty('action', action);
-                console.log(action);
-                console.log('submitting');
                 form.submit();
-                console.log('sumitted');
             });
         });
     }
@@ -91,7 +87,6 @@ window.addEvent('domready', function() {
         commenting_on_cont = range.cloneContents().textContent;
         id_to_comment = dummy.parentNode.parentNode.id;
         dummy.parentNode.removeChild(dummy);
-        console.log('comm_on: ' + id_to_comment);
 
         var pageleft, pageright;
         [pageleft, pageright] = findpos(document.getElementById('page'));
@@ -102,7 +97,6 @@ window.addEvent('domready', function() {
         notif.innerHTML = "<div id='comm_on'>Comment on that!</div>";
 
         document.getElementById('comm_on').addEvent('click', function(evt){
-            console.log('comm_on: ' + id_to_comment);
             evt.stop();
             if(document.getElements(".add_comment").length > 0){
                 var scroller = new Fx.Scroll(window, 
@@ -110,8 +104,6 @@ window.addEvent('domready', function() {
 
                 var comm_x, comm_y;
                 [comm_x, comm_y] = findpos(document.getElementById(id_to_comment));
-                console.log(comm_y + ' ' + document.getElementById(id_to_comment).offsetHeight + ' ' + id_to_comment);
-                console.log('comm_on: ' + id_to_comment);
                 scroller.start(0, comm_y+document.getElementById(id_to_comment).offsetHeight);
             }
         });
