@@ -21,7 +21,30 @@ function findpos(obj) {
     return [objleft, objtop];
 }
 
+function insert(main_string, position, pasted_string){
+    var temp1 = main_string.slice(0, position);
+    var temp2 = main_string.slice(position+1);
+    return temp1 + pasted_string + temp2;
+}
+
 window.addEvent('domready', function() {
+    for(var i=0; i < comm_array.length; i++){
+        console.log(comm_array[i].comment_on);
+        console.log(comm_array[i].post_id);
+        console.log(comm_array[i].comment_id);
+        
+
+        var comment = document.getElementById('entry' + comm_array[i].post_id).innerHTML;
+        var index = comment.search(comm_array[i].comment_on);
+        if(index != -1){
+            comment = insert(comment, index+comm_array[i].comment_on.length, "</span>");
+            comment = insert(comment, index, "<span style='color:white;display:block;border: 2px solid #C02942;background-color:#542437;'>");
+            console.log('Hurrey!!!!!!!!');
+            document.getElementById('entry' + comm_array[i].post_id).innerHTML = comment;
+        }
+    }
+    console.log(comm_array.length);
+    setTimeout('console.log(comm_array.length)', 2000);
     if(document.getElements('.add_comment dl').length > 0){
         document.getElements('.add_comment dl').each(function(element){
             comment_anims.push(new Fx.Slide(element, 

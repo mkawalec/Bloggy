@@ -13,9 +13,9 @@
                 <div class=comm_title><b>{{ comment.comment.title }}</b></div>
                 <div class=comm_meta>Posted by: <b>{{ comment.comment.author }}</b> at {{ comment.comment.datetime }} UTC</div>
                 <div class=comm_contents>{{ comment.comment.contents }}</div>
-                <!--<script type=text/javascript>
-                    comm_array.append({{ comment.comment.comment_on }});
-                </script>-->
+                <script type=text/javascript>
+                    comm_array.push({{ '{' }}comment_on:'{{ comment.comment.comment_on }}',post_id:'{{ entry.id }}',comment_id:'comment{{ comment.comment.id }}'{{ '}' }} );
+                </script>
             </div>
             {% if session.logged_in %}
             <form action="{{ url_for('add_comment', parent=entry.id, reply_to=comment.comment.id, comment_on='1qw23a') }}" method=post class=add_comment>
@@ -35,6 +35,9 @@
                     <div class=comm_title><b>{{ comm1.comment.title }}</b></div>
                     <div class=comm_meta>Posted by: <b>{{ comm1.comment.author }}</b> at {{ comm1.comment.datetime }} UTC</div>
                     <div class=comm_contents>{{ comm1.comment.contents }}</div>
+                    <script type=text/javascript>
+                        comm_array.push({{ '{' }}comment_on:'{{ comm1.comment.comment_on }}',post_id:'{{ entry.id }}',comment_id:'comment{{ comm1.comment.id }}'{{ '}' }} );
+                    </script>
                 </div>
             {% else %}
                 <em class=comment_level_1>No child comments here</em>
