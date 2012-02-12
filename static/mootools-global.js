@@ -77,6 +77,7 @@ window.addEvent('domready', function() {
         });
     }
     window.addEvent('mouseup', function(event){
+        if(window.getSelection().getRangeAt(0).cloneContents().textContent.length>0){
         event.stop();
         var range = window.getSelection().getRangeAt(0);
         var dummy = document.createElement('span');
@@ -98,9 +99,10 @@ window.addEvent('domready', function() {
         notif.setProperty('style', stylestring);
         notif.setProperty('id', 'comm_notif');
 
-        notif.innerHTML = "<div id='common'>Comment on that!</div>";
+        notif.innerHTML = "<div id='comm_on'>Comment on that!</div>";
 
-        document.getElementById('common').addEvent('click', function(evt){
+        document.getElementById('comm_on').addEvent('click', function(evt){
+            console.log('comm_on: ' + id_to_comment);
             evt.stop();
             if(document.getElements(".add_comment").length > 0){
                 var scroller = new Fx.Scroll(window, 
@@ -113,5 +115,6 @@ window.addEvent('domready', function() {
                 scroller.start(0, comm_y+document.getElementById(id_to_comment).offsetHeight);
             }
         });
+        }
     });
 });

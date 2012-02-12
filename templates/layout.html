@@ -31,7 +31,7 @@
         <div class=hello>Welcome, {{ session.user}}</div>
     {% endif %}
         <a id=adduser href="{{ url_for('useradd') }}">Add user</a>
-        <div id=dolly_quote>Eighty percent of the people in the world are fools and the rest of us are in danger of contamination.</div>
+        <!--<div id=dolly_quote>Eighty percent of the people in the world are fools and the rest of us are in danger of contamination.</div>-->
     </div>
     {% for message in get_flashed_messages() %}
         <div class='flash'>{{ message }}</div>
