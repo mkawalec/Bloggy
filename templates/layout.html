@@ -1,0 +1,40 @@
+<!doctype html>
+<title>Bloggy</title>
+<link rel=stylesheet/less text=text/css href="{{ url_for('static', filename='style.less') }}">
+<script type=text/javascript src="{{ url_for('static', filename='less-1.2.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='mootools-core-1.4.4-full-nocompat.js') }}"></script> 
+<script type=text/javascript src="{{ url_for('static', filename='mootools-more-1.4.0.1.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='mootools-global.js') }}"></script>
+<script type=text/javascript>
+    var script_root = {{ request.script_root|tojson|safe }};
+</script>
+{% block header %}{% endblock %}
+
+<div class=page id=page>
+    <h1><a href="{{ url_for('show_entries')}}">Bloggy</a></h1>
+    <div class=metanav>
+    {% if not session.logged_in %}
+        <div id=login>Log in</div>
+        <form action="{{ url_for('login') }}" method=post id=login_form>
+            <dl>
+                <dt>Username:
+                <dd><input type=text name=username size=16 id='uname_input'>
+                <dt>Password:
+                <dd><input type=password name=password size=16>
+                <dd><input type=submit value=Login id='submit_login'>
+            </dl>
+        </form>
+        <div class=hello>Welcome, stranger</div>
+    {% else %}
+        <a id=logout href="{{ url_for('logout') }}">Log out</a>
+        <a id=post href="{{ url_for('add_entry') }}">Post something</a>
+        <div class=hello>Welcome, {{ session.user}}</div>
+    {% endif %}
+        <a id=adduser href="{{ url_for('useradd') }}">Add user</a>
+        <div id=dolly_quote>Eighty percent of the people in the world are fools and the rest of us are in danger of contamination.</div>
+    </div>
+    {% for message in get_flashed_messages() %}
+        <div class='flash'>{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>

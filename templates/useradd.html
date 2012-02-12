@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block header %}
+<script type=text/javascript src="{{ url_for('static', filename='mootools-helpers.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h2>Add a user</h2>
+    <form action="{{ url_for('useradd') }}" method=post id=form1>
+        <dl>
+            <dt>Username:
+            <dd><input type=text name=uname id='uname_txt'><div id=ajax></div>
+            <dt>Password:
+            <dd><input type=password name=password>
+            <dd><input type=submit value='Add a user'>
+        </dl>
+        <table id=table1>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.uname }}</td>
+                <td><div id="del{{user.uname}}" class="deluser">X</div></td>
+            <tr>
+            {% endfor %}
+        </table>
+    </form>
+    <br />
+    Time = {{ timed }}
+{% endblock %}
+

@@ -1,0 +1,82 @@
+@bg-color: #858585;
+@inner-color: lighten(@bg-color, 40%);
+@pagewidth: 700px;
+@text-margin: 10px;
+
+body { 
+    font-family: sans-serif;
+    background-color: @inner-color;
+}
+
+a                       { text-decoration: none; color: black; }
+
+.page {
+    width: @pagewidth;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
+.common { 
+    position: absolute; 
+    color: white; 
+    background-color: #FF0000; 
+}
+
+.metanav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 40px;
+    a                   { color: #fff; float:right; text-size: 1em; margin: 10px;}
+    #dolly_quote        { color: darken(#fff, 40%); float:right; margin: 10px;}
+    .hello              { float: left; text-size: 1em; margin: 10px; color: #fff;}
+    #login              { color: #fff; float:right; text-size: 1em; margin: 10px;}
+    #submit_login       { margin-top: 5px; float: right; margin-right: 8px;}
+}
+
+#login_form { 
+    background-color: rgba(0, 0, 0, 0.8);  
+    position: fixed;
+    width: 200px;
+    height: 110px;
+    overflow: hidden;
+    top: 40px;
+    color: white;
+    right: 0px;
+    padding-left:5px;
+    dl                  { margin: 0; }
+}
+
+.flash                  { background-color: #B2E7ED; padding: 5px; }
+
+.entry { 
+    background: @inner-color;
+    width: @pagewidth*0.9; 
+    padding: 5px;
+    margin: 20px 0;
+    border: 1px dashed black;
+    font-family: courier;
+    .title { margin: 0; float: left; width: 100%; font-size: 1.4em; }
+    .author { font-size: 0.8em; text-style: italic; margin-bottom: 10px;} 
+    .contents           { margin: @text-margin; }
+    .empty              { margin-bottom: 5px;}
+    .comments {
+        .comm_label     { font-size:0.8em; margin: 5px 0; }
+        .comm_title     { margin-left: @text-margin; font-size: 1.2em; }
+        .comm_meta      { margin-left: @text-margin; padding: 0; font-size: 0.8em;}
+        .comm_contents  { font-size: 0.9em; margin-left: 2*@text-margin; }
+        .comment_level_1{ margin-left: 2*@text-margin; }
+        .comment_level_2{ margin-left: 3*@text-margin; }
+        .comment_level_3{ margin-left: 4*@text-margin; }
+    }
+    .add_comment {
+        margin-left: @text-margin;
+        .add_header     { margin-top: 20px; font-size:0.8em; text-decoration:underline; }
+        textarea        { resize: none; }
+        dl              { margin-top: 0; }
+    }
+}
+

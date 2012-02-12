@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% for entry in entries %}
+    <div class=entry id=entry{{ entry.id }}>
+    <h2 class=title>{{ entry.title }}</h2> 
+    <div class=author>Posted by: <b>{{ session.user }}</b></div>
+    <div class=contents>{{ entry.html|safe }}</div>
+    <div class=comments>
+        <div class=comm_label><b>Comments:</b></div>    
+        {% for i in comments[entry.id][0].children %}
+            {% set comment = comments[entry.id][i] %}
+            <div class=comment id=comment{{ comment.comment.id }}>
+                <div class=comm_title><b>{{ comment.comment.title }}</b></div>
+                <div class=comm_meta>Posted by: <b>{{ comment.comment.author }}</b> at {{ comment.comment.datetime }} UTC</div>
+                <div class=comm_contents>{{ comment.comment.contents }}</div>
+                <!--<script type=text/javascript>
+                    comm_array.append({{ comment.comment.comment_on }});
+                </script>-->
+            </div>
+            {% if session.logged_in %}
+            <form action="{{ url_for('add_comment', parent=entry.id, reply_to=comment.comment.id, comment_on='1qw23a') }}" method=post class=add_comment>
+                <div class=add_header id="comm_header_{{ loop.index }}"><b>Add a comment</b></div>
+                <dl>
+                    <dt>Comment title:
+                    <dd><input type=text size=63 name=comment_title>
+                    <dt>Comment body:
+                    <dd><textarea name=comment_body rows=6 cols=72></textarea>
+                    <dd><input type=submit value='Post comment' class=postc>
+                </dl>
+            </form>
+            {% endif %}
+            {% for j in comment.children %}
+                {% set comm1 = comments[entry.id][j] %}
+                <div class=comment_level_1>
+                    <div class=comm_title><b>{{ comm1.comment.title }}</b></div>
+                    <div class=comm_meta>Posted by: <b>{{ comm1.comment.author }}</b> at {{ comm1.comment.datetime }} UTC</div>
+                    <div class=comm_contents>{{ comm1.comment.contents }}</div>
+                </div>
+            {% else %}
+                <em class=comment_level_1>No child comments here</em>
+            {% endfor %} 
+        {% else %}
+            <em class=empty>Nothing found here</em>
+        {% endfor %}
+    </div>
+        {% if session.logged_in %}
+        <form action="{{ url_for('add_comment', parent=entry.id, reply_to='0', comment_on='1qw23a') }}" method=post class=add_comment>
+            <div class=add_header id="comm_header_{{ loop.index }}"><b>Add a comment</b></div>
+            <dl>
+                <dt>Comment title:
+                <dd><input type=text size=63 name=comment_title>
+                <dt>Comment body:
+                <dd><textarea name=comment_body rows=6 cols=72></textarea>
+                <dd><input type=submit value='Post comment' class=postc>
+            </dl>
+        </form>
+        {% endif %}
+    </div>
+    {% else %}
+        <em>Nothing found here</em>
+    {% endfor %}
+{% endblock %}
+

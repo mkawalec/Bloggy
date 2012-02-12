@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block header %}
+<script type=text/javascript src="{{ url_for('static', filename='mootools-helpers.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h2>Entry</h2>
+    <form action="{{ url_for('add_entry') }}" method=post id=form1>
+        <dl>
+            <dt>Topic:
+            <dd><input type=text name=title> 
+            <dt>Text:
+            <dd><input type=text name=text>
+            <dd><input type=submit value='Add a post'>
+        </dl>
+    </form>
+    <br />
+{% endblock %}
+
