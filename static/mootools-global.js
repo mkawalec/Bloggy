@@ -4,6 +4,8 @@ var comm_array = new Array();
 var animation_duration = 500;
 var loginAnimator;
 var id_to_comment, commenting_on_cont;
+var commenting_on = {begin: 0, end: 0};
+var current_start = 0;
 
 function highlighted() {
     return window.getSelection();
@@ -95,6 +97,10 @@ window.addEvent('domready', function() {
         var range = window.getSelection().getRangeAt(0);
         var dummy = document.createElement('span');
         console.log('start: ' + range.startOffset + ' end: ' + range.endOffset);
+        
+        commenting_on.begin = range.startOffset;
+        commenting_on.end = range.endOffset;
+        console.log('Range count: ' + window.getSelection().rangeCount);
 
         range.insertNode(dummy);
         var x,y;
@@ -109,8 +115,8 @@ window.addEvent('domready', function() {
             document.getElementById('page').appendChild(notif);
         }
 
-        commenting_on_cont = range.cloneContents().textContent;
         id_to_comment = dummy.parentNode.parentNode.id;
+        console.log(id_to_comment);
         dummy.parentNode.removeChild(dummy);
 
         var pageleft, pageright;
