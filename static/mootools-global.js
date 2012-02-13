@@ -42,18 +42,14 @@ window.addEvent('domready', function() {
             comment_anims[element.id.slice(3)] = new Fx.Slide(element, 
                 {duration: animation_duration, transition: 'quad:in'});
             comment_anims[element.id.slice(3)].hide();
-            console.log('elid: ' + element.id.slice(3) + ' id: ' + element.id);
         });
         document.getElements('.add_header').each(function(element){
             if(element != null){
                 element.addEvent('click', function(){
-                    console.log(this.id.slice(12));
                     var length = 0;
                     for(element in comment_anims){
-                        console.log(element);
                         length++;
                     }
-                    console.log('length: ' + length);
                     comment_anims[this.id.slice(12)].slideIn();
                 });
             }
@@ -98,12 +94,21 @@ window.addEvent('domready', function() {
         event.stop();
         var range = window.getSelection().getRangeAt(0);
         var dummy = document.createElement('span');
+        console.log('start: ' + range.startOffset + ' end: ' + range.endOffset);
+
         range.insertNode(dummy);
         var x,y;
         [x, y] = findpos(dummy);
         var notif = document.createElement('div');
         notif.setProperty('class', 'common');
-        document.getElementById('page').appendChild(notif);
+        notif.setProperty('id', 'comm_notif');
+
+        if(!document.getElementById('comm_notif')) document.getElementById('page').appendChild(notif);
+        else {
+            document.getElementById('page').removeChild(document.getElementById('comm_notif'));
+            document.getElementById('page').appendChild(notif);
+        }
+
         commenting_on_cont = range.cloneContents().textContent;
         id_to_comment = dummy.parentNode.parentNode.id;
         dummy.parentNode.removeChild(dummy);
@@ -112,7 +117,6 @@ window.addEvent('domready', function() {
         [pageleft, pageright] = findpos(document.getElementById('page'));
         var stylestring = 'left:'+(pageleft-150)+'px;top:'+y+'px;';
         notif.setProperty('style', stylestring);
-        notif.setProperty('id', 'comm_notif');
 
         notif.innerHTML = "<div id='comm_on'>Comment on that!</div>";
 
