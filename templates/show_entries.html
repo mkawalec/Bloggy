@@ -19,8 +19,8 @@
             </div>
             {% if session.logged_in %}
             <form action="{{ url_for('add_comment', parent=entry.id, reply_to=comment.comment.id, comment_on='1qw23a') }}" method=post class=add_comment>
-                <div class=add_header id="comm_header_{{ loop.index }}"><b>Add a comment</b></div>
-                <dl>
+                <div class=add_header id="comm_header_{{ comment.comment.id }}"><b>Add a comment</b></div>
+                <dl id="dl_{{ comment.comment.id }}">
                     <dt>Comment title:
                     <dd><input type=text size=63 name=comment_title>
                     <dt>Comment body:
@@ -48,8 +48,8 @@
     </div>
         {% if session.logged_in %}
         <form action="{{ url_for('add_comment', parent=entry.id, reply_to='0', comment_on='1qw23a') }}" method=post class=add_comment>
-            <div class=add_header id="comm_header_{{ loop.index }}"><b>Add a comment</b></div>
-            <dl>
+            <div class=add_header id="comm_header_-1"><b>Add a comment</b></div>
+            <dl id="dl_-1">
                 <dt>Comment title:
                 <dd><input type=text size=63 name=comment_title>
                 <dt>Comment body:

@@ -1,5 +1,5 @@
 "use strict";
-var comment_anims = new Array();
+var comment_anims = {};
 var comm_array = new Array();
 var animation_duration = 500;
 var loginAnimator;
@@ -29,33 +29,32 @@ function insert(main_string, position, pasted_string){
 
 window.addEvent('domready', function() {
     for(var i=0; i < comm_array.length; i++){
-        console.log(comm_array[i].comment_on);
-        console.log(comm_array[i].post_id);
-        console.log(comm_array[i].comment_id);
-        
-
         var comment = document.getElementById('entry' + comm_array[i].post_id).innerHTML;
         var index = comment.search(comm_array[i].comment_on);
         if(index != -1){
-            comment = insert(comment, index+comm_array[i].comment_on.length, "</span>");
-            comment = insert(comment, index, "<span style='color:white;display:block;border: 2px solid #C02942;background-color:#542437;'>");
-            console.log('Hurrey!!!!!!!!');
+            comment = insert(comment, index+comm_array[i].comment_on.length, "</div>");
+            comment = insert(comment, index, "<div style='color:white;display:inline;background-color:#542437;'>");
             document.getElementById('entry' + comm_array[i].post_id).innerHTML = comment;
         }
     }
-    console.log(comm_array.length);
-    setTimeout('console.log(comm_array.length)', 2000);
     if(document.getElements('.add_comment dl').length > 0){
         document.getElements('.add_comment dl').each(function(element){
-            comment_anims.push(new Fx.Slide(element, 
-                {duration: animation_duration, transition: 'quad:in'}));
-            comment_anims[comment_anims.length-1].hide();
+            comment_anims[element.id.slice(3)] = new Fx.Slide(element, 
+                {duration: animation_duration, transition: 'quad:in'});
+            comment_anims[element.id.slice(3)].hide();
+            console.log('elid: ' + element.id.slice(3) + ' id: ' + element.id);
         });
-        document.getElements('.add_header').each(function(element, iter){
+        document.getElements('.add_header').each(function(element){
             if(element != null){
                 element.addEvent('click', function(){
                     console.log(this.id.slice(12));
-                    comment_anims[parseInt(this.id.slice(12))-1].slideIn();
+                    var length = 0;
+                    for(element in comment_anims){
+                        console.log(element);
+                        length++;
+                    }
+                    console.log('length: ' + length);
+                    comment_anims[this.id.slice(12)].slideIn();
                 });
             }
         });
@@ -88,7 +87,6 @@ window.addEvent('domready', function() {
                 var action = form.getProperty('action');
                 var index = action.lastIndexOf('/');
                 action = action.slice(0,index+1);
-                console.log(action + ' ' + index + ' ' + action.length);
                 action += encodeURIComponent(commenting_on_cont);
                 form.setProperty('action', action);
                 form.submit();
@@ -104,7 +102,6 @@ window.addEvent('domready', function() {
         var x,y;
         [x, y] = findpos(dummy);
         var notif = document.createElement('div');
-        console.log(x + ' ' + y);
         notif.setProperty('class', 'common');
         document.getElementById('page').appendChild(notif);
         commenting_on_cont = range.cloneContents().textContent;
