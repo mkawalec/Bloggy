@@ -1,6 +1,7 @@
 "use strict";
 var comment_anims = {};
 var comm_array = new Array();
+var comm_cont = new Array();
 var animation_duration = 500;
 var loginAnimator;
 var id_to_comment, commenting_on_cont;
@@ -30,6 +31,12 @@ function insert(main_string, position, pasted_string){
 }
 
 window.addEvent('domready', function() {
+    // Create a map of post contents before inserting those stupid spans/divs
+    document.getElements('.entry .contents').each(function(element){
+        comm_cont.push(element.innerHTML);
+    });
+
+    // Add colour markings
     for(var i=0; i < comm_array.length; i++){
         var comment = document.getElementById('entry' + comm_array[i].post_id).innerHTML;
         var index = comment.search(comm_array[i].comment_on);
@@ -91,6 +98,15 @@ window.addEvent('domready', function() {
             });
         });
     }
+    /* 
+     * How to fix the range:
+     * - The span need to be, somehow, not inserted
+     *   Which gives us a nice problem of how to determine the position of the range on a page:
+     *   - I could copy the contents of the div, without any spans, to the memory, insert the span and then copy the contents back -> the position is determined.
+     *     Needs to test if the selection is still active in such a case, if it is not, a new seslection must be made using the start/stop details from a page
+     *  Then when the div is inserted, it shouldn't create a new line (does it actually?)
+     *
+     */
     window.addEvent('mouseup', function(event){
         if(window.getSelection().getRangeAt(0).cloneContents().textContent.length>0){
         event.stop();
@@ -117,7 +133,7 @@ window.addEvent('domready', function() {
 
         id_to_comment = dummy.parentNode.parentNode.id;
         console.log(id_to_comment);
-        dummy.parentNode.removeChild(dummy);
+        //dummy.parentNode.removeChild(dummy);
 
         var pageleft, pageright;
         [pageleft, pageright] = findpos(document.getElementById('page'));
