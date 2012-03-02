@@ -30,11 +30,19 @@ function insert(main_string, position, pasted_string){
     return temp1 + pasted_string + temp2;
 }
 
+// Delete newlines before (and after) tags:
+function delNewlines(string){
+    for(var i = 0; i < string.length; i++){
+        if(string[i] == '\\') console.log('yea');
+    }
+}
+
 window.addEvent('domready', function() {
     // Create a map of post contents before inserting those stupid spans/divs
     document.getElements('.entry .contents').each(function(element){
         comm_cont.push(element.innerHTML);
     });
+    for(var i = 0; i < comm_cont.length; i++) delNewlines(comm_cont[i]);
 
     // Add colour markings
     for(var i=0; i < comm_array.length; i++){
