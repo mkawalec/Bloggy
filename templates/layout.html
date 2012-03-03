@@ -37,5 +37,13 @@
     {% for message in get_flashed_messages() %}
         <div class='flash'>{{ message }}</div>
     {% endfor %}
+    <!-- Chat window -->
+    <div id=chat_wrapper>
+        <div id=chat_window>
+            <div id=chat_text></div>
+            <input id=post type=text />
+        </div>
+        <div id=chat_button>Chat</div>
+    </div>
     {% block body %}{% endblock %}
 </div>
