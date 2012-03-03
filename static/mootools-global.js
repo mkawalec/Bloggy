@@ -172,5 +172,15 @@ window.addEvent('domready', function() {
     var hidden = true;
     var chat_anim = new Fx.Tween('chat_window', {property: 'bottom', duration: animation_duration, transition: 'quad:in'});
     chat_anim.start(-(document.getElementById('chat_text').offsetHeight+document.getElementById('chat_post').offsetHeight + 5) + 'px');
-
+    document.getElementById('chat_button').addEvent('click', function(event){
+        event.stop();
+        if(hidden) {
+            chat_anim.start(5);
+            hidden = false;
+        }
+        else {
+            chat_anim.start(-(document.getElementById('chat_text').offsetHeight+document.getElementById('chat_post').offsetHeight + 5));
+            hidden = true;
+        }
+    });
 });

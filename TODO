@@ -2,6 +2,7 @@ Things to be done:
 - Implement a JSON chat with long polling
     - The json autosave needs to be implemented 
     for each of the fields infividually
+    - The chat autohiding needs to be protected from 'multiple clicks'
 
 - Add different colour schemes
 - Implement colour schemes sharing between users
