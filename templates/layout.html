@@ -10,6 +10,13 @@
 </script>
 {% block header %}{% endblock %}
 
+<!-- Chat window -->
+<div id=chat_window>
+    <div id=chat_button>Chat</div>
+    <div id=chat_text></div>
+    <input id=chat_post type=text />
+</div>
+
 <div class=page id=page>
     <h1><a href="{{ url_for('show_entries')}}">Bloggy</a></h1>
     <div class=metanav>
@@ -37,13 +44,5 @@
     {% for message in get_flashed_messages() %}
         <div class='flash'>{{ message }}</div>
     {% endfor %}
-    <!-- Chat window -->
-    <div id=chat_wrapper>
-        <div id=chat_window>
-            <div id=chat_text></div>
-            <input id=post type=text />
-        </div>
-        <div id=chat_button>Chat</div>
-    </div>
     {% block body %}{% endblock %}
 </div>

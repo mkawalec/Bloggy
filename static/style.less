@@ -2,6 +2,7 @@
 @inner-color: lighten(@bg-color, 40%);
 @pagewidth: 700px;
 @text-margin: 10px;
+@chat_width: 200px;
 
 body { 
     font-family: sans-serif;
@@ -82,3 +83,33 @@ a                       { text-decoration: none; color: black; }
 
 .label                  { width: 200px; margin-bottom: 5px; float:left;}
 .acc                    { width: 300px;}
+
+#chat_window {
+    width: @chat_width;
+    height: 1.5*@chat_width;
+    position: fixed;
+    bottom: 0;
+    right: 100px;
+    #chat_button {
+        align: left;
+        width: @chat_width;
+        height: 25px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+    }
+    #chat_text {
+        align: left;
+        width: @chat_width;
+        height: auto;
+        color: black;
+        background-color: white;
+    }
+    #chat_post {
+        align: left;
+        width: @chat_width;
+        heigth: 20px;
+    }
+}
+
