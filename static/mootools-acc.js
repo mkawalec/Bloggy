@@ -31,7 +31,7 @@ function runJSON(id, value){
         onComplete: function(response) {
             details = JSON.parse(response).details[0];
             console.log(details);
-            document.getElementById('json_status').innerHTML = (JSON.parse(response).status == 200) ? 'Save successful' : 'Something wrong??';
+            document.getElementById('json_status').innerHTML = (JSON.parse(response).status == 200) ? 'Save successful!!' : 'Something wrong??';
             json_ran = false;
             console.log(json_ran);
         }
