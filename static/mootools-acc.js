@@ -2,7 +2,7 @@ var json_ran = false;
 
 function check_equality(id, value){
     if(document.getElementById(id)){
-        if(document.getElementById(id).value != value) return true;
+        if(details[id] != value) return true;
     }
     return false;
 }
