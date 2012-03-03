@@ -1,16 +1,23 @@
+"use strict";
 var json_ran = false;
 
 function check_equality(id, value){
-    if(document.getElementById(id)){
-        if(details[id] != value && value.length > 0) return true;
+    if(document.getElementById(id) && details['id']){
+        if(details[id] != value && value.length > 0  && value.indexOf('None') == -1) {
+            return true;
+        }
     }
     return false;
 }
 
 function check_field(){
     document.getElements('input').each(function(element){
-        if(check_equality(element.id, element.value)) runJSON(element.id, element.value);
+        if(check_equality(element.id, element.value)) {
+            console.log('JSON ran');
+            runJSON(element.id, element.value);
+        }
     });
+    json_ran = false;
 }
 
 function runJSON(id, value){
@@ -23,16 +30,26 @@ function runJSON(id, value){
             details = JSON.parse(response).details;
             document.getElementById('json_status').innerHTML = (JSON.parse(response).status == 200) ? 'Save successful' : JSON.parse(response).status;
             json_ran = false;
+            console.log(json_ran);
         }
     }).send();
-}       
+}      
+
+function runJson(){
+    console.log(json_ran);
+    if(!json_ran){
+        console.log('shot');
+        json_ran = true;
+        document.getElementById('json_status').innerHTML = 'updating...';
+        setTimeout("check_field()", 800);
+    }
+}
 
 window.addEvent('domready', function(){
     window.addEvent('keyup', function(){
         if(!json_ran) {
-            json_ran = true;
-            document.getElementById('json_status').innerHTML = 'updating...';
-            setTimeout("check_field()", 800);
+            runJson();
         }
+        else setTimeout("runJson()", 800);
     });
 });
