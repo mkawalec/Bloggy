@@ -115,52 +115,54 @@ window.addEvent('domready', function() {
      *  Then when the div is inserted, it shouldn't create a new line (does it actually?)
      *
      */
-    window.addEvent('mouseup', function(event){
-        if(window.getSelection().getRangeAt(0).cloneContents().textContent.length>0){
-        event.stop();
-        var range = window.getSelection().getRangeAt(0);
-        var dummy = document.createElement('span');
-        console.log('start: ' + range.startOffset + ' end: ' + range.endOffset);
+    if(document.getElements('.entry').length > 0){
+        window.addEvent('mouseup', function(event){
+            if(window.getSelection().getRangeAt(0).cloneContents().textContent.length>0){
+            event.stop();
+            var range = window.getSelection().getRangeAt(0);
+            var dummy = document.createElement('span');
+            console.log('start: ' + range.startOffset + ' end: ' + range.endOffset);
         
-        commenting_on.begin = range.startOffset;
-        commenting_on.end = range.endOffset;
-        console.log('Range count: ' + window.getSelection().rangeCount);
+            commenting_on.begin = range.startOffset;
+            commenting_on.end = range.endOffset;
+            console.log('Range count: ' + window.getSelection().rangeCount);
 
-        range.insertNode(dummy);
-        var x,y;
-        [x, y] = findpos(dummy);
-        var notif = document.createElement('div');
-        notif.setProperty('class', 'common');
-        notif.setProperty('id', 'comm_notif');
+            range.insertNode(dummy);
+            var x,y;
+            [x, y] = findpos(dummy);
+            var notif = document.createElement('div');
+            notif.setProperty('class', 'common');
+            notif.setProperty('id', 'comm_notif');
 
-        if(!document.getElementById('comm_notif')) document.getElementById('page').appendChild(notif);
-        else {
-            document.getElementById('page').removeChild(document.getElementById('comm_notif'));
-            document.getElementById('page').appendChild(notif);
-        }
+            if(!document.getElementById('comm_notif')) document.getElementById('page').appendChild(notif);
+            else {
+                document.getElementById('page').removeChild(document.getElementById('comm_notif'));
+                document.getElementById('page').appendChild(notif);
+            }
 
-        id_to_comment = dummy.parentNode.parentNode.id;
-        console.log(id_to_comment);
+            id_to_comment = dummy.parentNode.parentNode.id;
+            console.log(id_to_comment);
         //dummy.parentNode.removeChild(dummy);
 
-        var pageleft, pageright;
-        [pageleft, pageright] = findpos(document.getElementById('page'));
-        var stylestring = 'left:'+(pageleft-150)+'px;top:'+y+'px;';
-        notif.setProperty('style', stylestring);
+            var pageleft, pageright;
+            [pageleft, pageright] = findpos(document.getElementById('page'));
+            var stylestring = 'left:'+(pageleft-150)+'px;top:'+y+'px;';
+            notif.setProperty('style', stylestring);
 
-        notif.innerHTML = "<div id='comm_on'>Comment on that!</div>";
+            notif.innerHTML = "<div id='comm_on'>Comment on that!</div>";
 
-        document.getElementById('comm_on').addEvent('click', function(evt){
-            evt.stop();
-            if(document.getElements(".add_comment").length > 0){
-                var scroller = new Fx.Scroll(window, 
-                    {duration: animation_duration, transition:'quad:in'});
+            document.getElementById('comm_on').addEvent('click', function(evt){
+                evt.stop();
+                if(document.getElements(".add_comment").length > 0){
+                    var scroller = new Fx.Scroll(window, 
+                        {duration: animation_duration, transition:'quad:in'});
 
-                var comm_x, comm_y;
-                [comm_x, comm_y] = findpos(document.getElementById(id_to_comment));
-                scroller.start(0, comm_y+document.getElementById(id_to_comment).offsetHeight);
-            }
-        });
+                    var comm_x, comm_y;
+                    [comm_x, comm_y] = findpos(document.getElementById(id_to_comment));
+                    scroller.start(0, comm_y+document.getElementById(id_to_comment).offsetHeight);
+                }
+            });
         }
     });
+    }
 });

@@ -174,6 +174,13 @@ def rmuser():
     flash('A user was deleted');
     return jsonify(uname=request.args.get('username', 0, type=str))
 
+@app.route('/_modify_account')
+@login_required
+def mod_acc():
+    g.db.execute('update users set ? = ? where id = ?', [request.args.get('field', 0, type=str), request.args.get('updated_val', 0, type=str), request.args.get('acc_id', 0, type=int)])
+    g.db.commit()
+    return jsonify(status=200, details=query_db('select * from users where id =?', [request.args.get('acc_id', 0, type=int)]))
+
 if __name__ == '__main__':
     app.run()
 

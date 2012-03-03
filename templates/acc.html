@@ -1,17 +1,23 @@
 {% extends "layout.html" %}
 {% block header %}
-<scripty type=text/javascript src="{{ url_for('static', filename='mootools-acc.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='mootools-acc.js') }}"></script>
+<!-- Script goverinig json field update -->
+<script type=text/javascript>
+    var details = {{ details|tojson|safe }};
+    console.log(details);
+</script>
 {% endblock %}
 
 {% block body %}
     <h2 id=settings>Your account settings, {{ details.uname }}:</h2>
-    <div class=label>Real Name:</div><input type=text id=rname value="{{details.real_name }}" class=acc /><br />
-    <div class=label>Password Hash:</div><input type=text id=pass value="{{details.password }}" readonly=readonly class=acc /><br />
+    <div class=label>Real Name:</div><input type=text id=real_name value="{{details.real_name }}" class=acc /><br />
+    <div class=label>Password Hash:</div><input type=text id=password value="{{details.password }}" readonly=readonly class=acc /><br />
     <div class=label>Created By:</div><input type=text id=created_by value="{{ details.created_by }}" class=acc /><br />
     <div class=label>Date Created:</div><input type=text id=date_created value="{{ details.date_created }}" class=acc /><br />
     <div class=label>Email: </div><input type=text id=email valie="{{ details.email}}"class=acc /><br />
-    <div class=label>Last edit at:</div><input type=text id=last_edit value="{{ details.last_edit_at }}" class=acc /><br />
-    <div class=label>User level:</div><input type=text id=lvl value="{{ details.user_level}}" class=acc /><br />
-    <div class=label>Stylesheet:</div><input type=text id=ssheet value="{{ details.stylesheet }}" class=acc />
-
+    <div class=label>Last edit at:</div><input type=text id=last_edit_at value="{{ details.last_edit_at }}" class=acc /><br />
+    <div class=label>User level:</div><input type=text id=user_level value="{{ details.user_level}}" class=acc /><br />
+    <div class=label>Stylesheet:</div><input type=text id=stylesheet value="{{ details.stylesheet }}" class=acc />
+    
+    <div id=json_status></div>
 {% endblock %}
