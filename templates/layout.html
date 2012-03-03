@@ -28,6 +28,7 @@
     {% else %}
         <a id=logout href="{{ url_for('logout') }}">Log out</a>
         <a id=post href="{{ url_for('add_entry') }}">Post something</a>
+        <a id=acc href="{{ url_for('account') }}">Account settings</a>
         <div class=hello>Welcome, {{ session.user}}</div>
     {% endif %}
         <a id=adduser href="{{ url_for('useradd') }}">Add user</a>

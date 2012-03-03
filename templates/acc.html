@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block header %}
+<scripty type=text/javascript src="{{ url_for('static', filename='mootools-acc.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h2 id=settings>Your account settings, {{ details.uname }}:</h2>
+    <div class=label>Real Name:</div><input type=text id=rname value="{{details.real_name }}" /><br />
+    <div class=label>Password Hash:</div><input type=text id=pass value="{{details.password }}" readonly=readonly /><br />
+    <div class=label>Created By:</div><input type=text id=created_by value="{{ details.created_by }}" /><br />
+    <div class=label>Date Created:</div><input type=text id=date_created value="{{ details.date_created }}"/><br />
+    <div class=label>Email: </div><input type=text id=email valie="{{ details.email}}"/><br />
+    <div class=label>Last edit at:</div><input type=text id=last_edit value="{{ details.last_edit_at }}"/><br />
+    <div class=label>User level:</div><input type=text id=lvl value="{{ details.user_level}}"/><br />
+    <div class=label>Stylesheet:</div><input type=text id=ssheet value="{{ details.stylesheet }}"/>
+
+{% endblock %}

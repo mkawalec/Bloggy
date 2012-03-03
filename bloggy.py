@@ -105,6 +105,7 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
+# Add a user
 @app.route('/useradd', methods=['GET', 'POST'])
 @login_required
 def useradd():
@@ -121,6 +122,14 @@ def useradd():
     timed = datetime.now() - time
     return render_template('useradd.html', users=users, timed=timed)
 
+# Some user account things
+@app.route('/account')
+@login_required
+def account():
+    user_details = query_db('select * from users where uname = ?', [session['user']], one=True)
+    return render_template('acc.html', details=user_details)
+
+# Add a post to the database
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def add_entry():
@@ -133,6 +142,7 @@ def add_entry():
         return redirect(url_for('show_entries'))
     return render_template('add_entry.html')
 
+# Add a comment 
 @app.route('/add_comment/<int:parent>/<int:reply_to>/<comment_on>', methods=['POST'])
 @login_required
 def add_comment(parent, reply_to, comment_on):
